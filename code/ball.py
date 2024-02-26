@@ -38,17 +38,23 @@ class Ball(pygame.sprite.Sprite):
             self.direction.y *= -1
         # check bounds
         if self.pos.x >= SCREEN_WIDTH:
-            self.pos.x = SCREEN_WIDTH
-            self.direction.x *= -1
+            # self.pos.x = SCREEN_WIDTH
+            # self.direction.x *= -1
+            print("computer scores")
         elif self.pos.x < 0:
-            self.pos.x = 0
-            self.direction.x *= -1
+            # self.pos.x = 0
+            # self.direction.x *= -1
+            print("player scores")
 
     def check_collision(self):
         for sprite in self.collision_sprites:
             if (sprite.rect.colliderect(self.rect)):
-                self.pos.x = sprite.rect.centerx - (PLAYER_WIDTH * 2)
-                self.direction.x *= -1
+                if sprite.identity == 'player':
+                    self.pos.x = sprite.rect.centerx - (PLAYER_WIDTH * 2)
+                    self.direction.x *= -1
+                else:
+                    self.pos.x = sprite.rect.centerx + (PLAYER_WIDTH * 2)
+                    self.direction.x *= -1
 
     def update(self, dt):
         self.check_collision()

@@ -2,11 +2,11 @@ import pygame
 from settings import *
 
 
-class Player(pygame.sprite.Sprite):
+class Computer(pygame.sprite.Sprite):
     def __init__(self, pos, group):
         super().__init__(group)
 
-        self.identity = 'player'
+        self.identity = 'computer'
 
         self.image = pygame.Surface((16, 64))
         self.image.fill('white')
@@ -20,9 +20,9 @@ class Player(pygame.sprite.Sprite):
     def input(self):
         keys = pygame.key.get_pressed()
 
-        if keys[pygame.K_UP]:
+        if keys[pygame.K_w]:
             self.direction.y = -1
-        elif keys[pygame.K_DOWN]:
+        elif keys[pygame.K_s]:
             self.direction.y = 1
         else:
             self.direction.y = 0
