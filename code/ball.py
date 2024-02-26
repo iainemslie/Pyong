@@ -1,12 +1,13 @@
 import pygame
 from settings import *
+from timer import Timer
 
 
 class Ball(pygame.sprite.Sprite):
-    def __init__(self, pos, group, collision_sprites):
+    def __init__(self, pos, group, collision_sprites, score):
         super().__init__(group)
 
-        self.image = pygame.Surface((32, 32))
+        self.image = pygame.Surface((BALL_SIZE, BALL_SIZE))
         self.image.fill('white')
         self.rect = self.image.get_rect(center=pos)
 
@@ -17,7 +18,28 @@ class Ball(pygame.sprite.Sprite):
         self.pos = pygame.math.Vector2(self.rect.center)
         self.speed = 500
 
+        self.timers = {
+            'reset timer': Timer(1000),
+        }
+
+        self.score = score
+
+    def reset_ball(self):
+        if self.timers['reset timer'].active:
+            if self.pos.x > SCREEN_WIDTH:
+                self.score[0] += 1
+            else:
+                self.score[1] += 1
+            self.pos.x = SCREEN_WIDTH // 2
+            self.pos.y = SCREEN_HEIGHT // 2
+            self.rect.centerx = self.pos.x
+            self.rect.centery = self.pos.y
+            self.direction.x *= -1
+            self.timers['reset timer'].deactivate()
+            print('reset')
+
     def move(self, dt):
+
         if self.direction:
             self.direction = self.direction.normalize()
 
@@ -36,15 +58,20 @@ class Ball(pygame.sprite.Sprite):
         elif self.pos.y < 0:
             self.pos.y = 0
             self.direction.y *= -1
+
         # check bounds
-        if self.pos.x >= SCREEN_WIDTH:
+        if self.pos.x >= SCREEN_WIDTH + BALL_SIZE:
+            # pass
             # self.pos.x = SCREEN_WIDTH
             # self.direction.x *= -1
-            print("computer scores")
-        elif self.pos.x < 0:
+            # print("computer scores")
+            self.timers['reset timer'].activate()
+        elif self.pos.x < 0 - BALL_SIZE:
+            # pass
             # self.pos.x = 0
             # self.direction.x *= -1
-            print("player scores")
+            # print("player scores")
+            self.timers['reset timer'].activate()
 
     def check_collision(self):
         for sprite in self.collision_sprites:
@@ -56,7 +83,14 @@ class Ball(pygame.sprite.Sprite):
                     self.pos.x = sprite.rect.centerx + (PLAYER_WIDTH * 2)
                     self.direction.x *= -1
 
+    def update_timers(self):
+        for timer in self.timers.values():
+            timer.update()
+
     def update(self, dt):
-        self.check_collision()
-        self.move(dt)
-        self.check_bounds()
+        if not self.timers['reset timer'].active:
+            self.check_collision()
+            self.move(dt)
+            self.check_bounds()
+            self.update_timers()
+            self.reset_ball()
