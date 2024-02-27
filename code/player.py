@@ -8,14 +8,14 @@ class Player(pygame.sprite.Sprite):
 
         self.identity = 'player'
 
-        self.image = pygame.Surface((16, 64))
+        self.image = pygame.Surface((PLAYER_WIDTH, PLAYER_HEIGHT))
         self.image.fill('white')
         self.rect = self.image.get_rect(center=pos)
 
         # movement
         self.direction = pygame.math.Vector2((0, 0))
         self.pos = pygame.math.Vector2(self.rect.center)
-        self.speed = 500
+        self.speed = PLAYER_SPEED
 
     def input(self):
         keys = pygame.key.get_pressed()

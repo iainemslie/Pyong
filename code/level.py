@@ -26,12 +26,15 @@ class Level:
         self.setup()
 
     def setup(self):
-        ball = Ball((480, 270), self.all_sprites,
+        ball = Ball((SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2), self.all_sprites,
                     self.collision_sprites, self.score)
         player1 = Player(
-            (900, 270), (self.all_sprites, self.collision_sprites))
+            (SCREEN_WIDTH - 60, SCREEN_HEIGHT // 2), (self.all_sprites, self.collision_sprites))
         computer = Computer(
-            (60, 270), (self.all_sprites, self.collision_sprites))
+            (60, SCREEN_HEIGHT // 2), (self.all_sprites, self.collision_sprites))
+
+    def reset(self):
+        self.__init__()
 
     def update_score(self):
         self.score_string = f"{self.score[0]} : {self.score[1]}"
@@ -58,6 +61,12 @@ class Level:
         reset_rect.center = (SCREEN_WIDTH / 2, SCREEN_HEIGHT * 3 // 4)
         self.display_surface.blit(reset_text, reset_rect)
 
+    def check_gameover_input(self):
+        keys = pygame.key.get_pressed()
+
+        if keys[pygame.K_SPACE]:
+            self.reset()
+
     def run(self, dt):
         if not self.game_over:
             self.display_surface.fill('black')
@@ -68,3 +77,4 @@ class Level:
             self.display_surface.blit(self.text, self.textRect)
         else:
             self.display_winner()
+            self.check_gameover_input()

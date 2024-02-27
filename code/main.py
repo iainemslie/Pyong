@@ -1,6 +1,7 @@
 import pygame
 import sys
 from settings import *
+from welcome import Welcome
 from level import Level
 
 
@@ -10,7 +11,10 @@ class Game:
         self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
         pygame.display.set_caption("Pyong")
         self.clock = pygame.time.Clock()
-        self.level = Level()
+        self.current_stage = Welcome(self.start_game)
+
+    def start_game(self):
+        self.current_stage = Level()
 
     def run(self):
         while True:
@@ -20,7 +24,7 @@ class Game:
                     sys.exit()
 
             dt = self.clock.tick() / 1000
-            self.level.run(dt)
+            self.current_stage.run(dt)
             pygame.display.update()
 
 

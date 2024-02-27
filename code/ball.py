@@ -16,7 +16,7 @@ class Ball(pygame.sprite.Sprite):
         # movement
         self.direction = pygame.math.Vector2((1, 1))
         self.pos = pygame.math.Vector2(self.rect.center)
-        self.speed = 500
+        self.speed = BALL_SPEED
 
         self.timers = {
             'reset timer': Timer(1000),
