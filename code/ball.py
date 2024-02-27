@@ -1,6 +1,7 @@
 import pygame
 from settings import *
 from timer import Timer
+from random import choice
 
 
 class Ball(pygame.sprite.Sprite):
@@ -14,7 +15,7 @@ class Ball(pygame.sprite.Sprite):
         self.collision_sprites = collision_sprites
 
         # movement
-        self.direction = pygame.math.Vector2((1, 1))
+        self.direction = pygame.math.Vector2((choice([-1, 1]), 1))
         self.pos = pygame.math.Vector2(self.rect.center)
         self.speed = BALL_SPEED
 
