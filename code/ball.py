@@ -37,7 +37,6 @@ class Ball(pygame.sprite.Sprite):
             self.rect.centery = self.pos.y
             self.direction.x *= -1
             self.timers['reset timer'].deactivate()
-            print('reset')
 
     def move(self, dt):
 
@@ -62,16 +61,8 @@ class Ball(pygame.sprite.Sprite):
 
         # check bounds
         if self.pos.x >= SCREEN_WIDTH + BALL_SIZE:
-            # pass
-            # self.pos.x = SCREEN_WIDTH
-            # self.direction.x *= -1
-            # print("computer scores")
             self.timers['reset timer'].activate()
         elif self.pos.x < 0 - BALL_SIZE:
-            # pass
-            # self.pos.x = 0
-            # self.direction.x *= -1
-            # print("player scores")
             self.timers['reset timer'].activate()
 
     def check_collision(self):
