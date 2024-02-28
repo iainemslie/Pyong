@@ -1,4 +1,5 @@
 import pygame
+import sys
 from ball import Ball
 from player import Player
 from player2 import Player2
@@ -63,7 +64,7 @@ class Level:
         winner_rect.center = (SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
         self.display_surface.blit(winner_text, winner_rect)
 
-        reset_string = "PRESS SPACEBAR TO RESET"
+        reset_string = "SPACEBAR TO RESET | Q TO QUIT"
         reset_text = self.font.render(reset_string, False, 'white')
         reset_rect = reset_text.get_rect()
         reset_rect.center = (SCREEN_WIDTH / 2, SCREEN_HEIGHT * 3 // 4)
@@ -74,6 +75,10 @@ class Level:
 
         if keys[pygame.K_SPACE]:
             self.reset()
+
+        if keys[pygame.K_q]:
+            pygame.quit()
+            sys.exit()
 
     def run(self, dt):
         if not self.game_over:
