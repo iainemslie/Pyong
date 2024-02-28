@@ -2,12 +2,11 @@ import pygame
 from settings import *
 
 
-class Computer(pygame.sprite.Sprite):
-    def __init__(self, pos, group, ball):
+class Player2(pygame.sprite.Sprite):
+    def __init__(self, pos, group):
         super().__init__(group)
 
         self.identity = 'computer'
-        self.ball = ball
 
         self.image = pygame.Surface((16, 64))
         self.image.fill('white')
@@ -18,12 +17,19 @@ class Computer(pygame.sprite.Sprite):
         self.pos = pygame.math.Vector2(self.rect.center)
         self.speed = 500
 
+    def input(self):
+        keys = pygame.key.get_pressed()
+
+        if keys[pygame.K_w]:
+            self.direction.y = -1
+        elif keys[pygame.K_s]:
+            self.direction.y = 1
+        else:
+            self.direction.y = 0
+
     def move(self, dt):
         self.pos.y += self.direction.y * self.speed * dt
         self.rect.centery = self.pos.y
-
-    def check_ball_position(self):
-        self.pos.y = self.ball.rect.centery
 
     def check_bounds(self):
         if self.rect.top <= 0:
@@ -32,5 +38,6 @@ class Computer(pygame.sprite.Sprite):
             self.rect.bottom = SCREEN_HEIGHT
 
     def update(self, dt):
+        self.input()
         self.move(dt)
-        self.check_ball_position()
+        self.check_bounds()

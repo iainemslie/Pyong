@@ -13,8 +13,8 @@ class Game:
         self.clock = pygame.time.Clock()
         self.current_stage = Welcome(self.start_game)
 
-    def start_game(self):
-        self.current_stage = Level()
+    def start_game(self, num_players):
+        self.current_stage = Level(num_players)
 
     def run(self):
         while True:
