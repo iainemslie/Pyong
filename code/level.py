@@ -11,9 +11,11 @@ class Level:
     def __init__(self, num_players):
         self.display_surface = pygame.display.get_surface()
 
+        # groups
         self.all_sprites = pygame.sprite.Group()
         self.collision_sprites = pygame.sprite.Group()
 
+        # game data
         self.num_players = num_players
         self.game_over = False
         self.winner = None
@@ -33,14 +35,14 @@ class Level:
     def setup(self):
         ball = Ball((SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2), self.all_sprites,
                     self.collision_sprites, self.score)
-        player1 = Player(
-            (SCREEN_WIDTH - 60, SCREEN_HEIGHT // 2), (self.all_sprites, self.collision_sprites))
+        Player((SCREEN_WIDTH - 60, SCREEN_HEIGHT // 2),
+               (self.all_sprites, self.collision_sprites))
         if self.num_players == 1:
-            computer = Computer(
-                (60, SCREEN_HEIGHT // 2), (self.all_sprites, self.collision_sprites), ball)
+            Computer((60, SCREEN_HEIGHT // 2),
+                     (self.all_sprites, self.collision_sprites), ball)
         elif self.num_players == 2:
-            player2 = Player2(
-                (60, SCREEN_HEIGHT // 2), (self.all_sprites, self.collision_sprites))
+            Player2((60, SCREEN_HEIGHT // 2),
+                    (self.all_sprites, self.collision_sprites))
 
     def reset(self):
         self.__init__(self.num_players)
