@@ -39,7 +39,6 @@ class Ball(pygame.sprite.Sprite):
             self.timers['reset timer'].deactivate()
 
     def move(self, dt):
-
         if self.direction:
             self.direction = self.direction.normalize()
 
@@ -51,7 +50,6 @@ class Ball(pygame.sprite.Sprite):
         self.rect.centery = self.pos.y
 
     def check_bounds(self):
-        # check bounds
         if self.pos.y >= SCREEN_HEIGHT:
             self.pos.y = SCREEN_HEIGHT
             self.direction.y *= -1
@@ -59,7 +57,6 @@ class Ball(pygame.sprite.Sprite):
             self.pos.y = 0
             self.direction.y *= -1
 
-        # check bounds
         if self.pos.x >= SCREEN_WIDTH + BALL_SIZE:
             self.timers['reset timer'].activate()
         elif self.pos.x < 0 - BALL_SIZE:
@@ -68,7 +65,7 @@ class Ball(pygame.sprite.Sprite):
     def check_collision(self):
         for sprite in self.collision_sprites:
             if (sprite.rect.colliderect(self.rect)):
-                if sprite.identity == 'player':
+                if sprite.side == 'right':
                     self.pos.x = sprite.rect.centerx - (PLAYER_WIDTH * 2)
                     self.direction.x *= -1
                 else:

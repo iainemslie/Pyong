@@ -16,44 +16,34 @@ class Welcome:
 
     def display_welcome_message(self):
         # Pyong name
-        font = pygame.font.Font("pixelfont.ttf", 64)
-        welcome_string = "PYONG"
-        text = font.render(welcome_string, False, 'white')
-        textRect = text.get_rect()
-        textRect.center = (SCREEN_WIDTH / 2, SCREEN_HEIGHT / 4)
-        self.display_surface.blit(text, textRect)
+        self.write_message((SCREEN_WIDTH / 2, SCREEN_HEIGHT / 3), "PYONG", 64)
 
         # 1P or 2P
-        font = pygame.font.Font("pixelfont.ttf", 18)
-        one_player_string = "1 Player"
-        one_player_text = font.render(one_player_string, False, 'white')
-        one_player_rect = one_player_text.get_rect()
-        one_player_rect.center = (SCREEN_WIDTH * 4 // 10, SCREEN_HEIGHT // 2)
-        self.display_surface.blit(one_player_text, one_player_rect)
-
-        two_player_string = "2 Player"
-        two_player_text = font.render(two_player_string, False, 'white')
-        two_player_rect = two_player_text.get_rect()
-        two_player_rect.center = (SCREEN_WIDTH * 6 // 10, SCREEN_HEIGHT // 2)
-        self.display_surface.blit(two_player_text, two_player_rect)
+        one_player_rect = self.write_message(
+            (SCREEN_WIDTH * 4 // 10, SCREEN_HEIGHT // 2), "1 Player", 18)
+        two_player_rect = self.write_message(
+            (SCREEN_WIDTH * 6 // 10, SCREEN_HEIGHT // 2), "2 Player", 18)
 
         # selection rectangle
-        if self.num_players == 1:
-            select_rect = pygame.Rect(
-                one_player_rect.left - 10, one_player_rect.top - 10, one_player_rect.w + 20, one_player_rect.h + 20)
-            pygame.draw.rect(self.display_surface, 'white', select_rect, 4)
-        elif self.num_players == 2:
-            select_rect = pygame.Rect(
-                two_player_rect.left - 10, two_player_rect.top - 10, two_player_rect.w + 20, two_player_rect.h + 20)
-            pygame.draw.rect(self.display_surface, 'white', select_rect, 4)
+        self.draw_selection_rect(
+            one_player_rect) if self.num_players == 1 else self.draw_selection_rect(two_player_rect)
 
         # Continue
-        font = pygame.font.Font("pixelfont.ttf", 18)
-        reset_string = "PRESS SPACEBAR TO START"
-        reset_text = font.render(reset_string, False, 'white')
-        reset_rect = reset_text.get_rect()
-        reset_rect.center = (SCREEN_WIDTH / 2, SCREEN_HEIGHT * 3 // 4)
-        self.display_surface.blit(reset_text, reset_rect)
+        self.write_message((SCREEN_WIDTH / 2, SCREEN_HEIGHT *
+                           2 // 3), "PRESS SPACEBAR TO START", 18)
+
+    def write_message(self, pos, message, font_size):
+        font = pygame.font.Font("pixelfont.ttf", font_size)
+        text = font.render(message, False, 'white')
+        text_rect = text.get_rect()
+        text_rect.center = pos
+        self.display_surface.blit(text, text_rect)
+        return text_rect
+
+    def draw_selection_rect(self, selected):
+        select_rect = pygame.Rect(
+            selected.left - 10, selected.top - 10, selected.w + 20, selected.h + 20)
+        pygame.draw.rect(self.display_surface, 'white', select_rect, 4)
 
     def input(self):
         keys = pygame.key.get_pressed()
