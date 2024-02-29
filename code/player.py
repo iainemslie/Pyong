@@ -31,13 +31,15 @@ class Player(pygame.sprite.Sprite):
         self.pos.y += self.direction.y * self.speed * dt
         self.rect.centery = self.pos.y
 
-    def check_bounds(self):
+    def check_bounds(self, dt):
         if self.rect.top <= 0:
             self.rect.top = 0
+            self.pos.y -= self.direction.y * self.speed * dt
         if self.rect.bottom >= SCREEN_HEIGHT:
             self.rect.bottom = SCREEN_HEIGHT
+            self.pos.y -= self.direction.y * self.speed * dt
 
     def update(self, dt):
         self.input()
         self.move(dt)
-        self.check_bounds()
+        self.check_bounds(dt)
