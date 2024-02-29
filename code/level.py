@@ -2,7 +2,6 @@ import pygame
 import sys
 from ball import Ball
 from player import Player
-from player2 import Player2
 from computer import Computer
 from settings import *
 
@@ -19,8 +18,8 @@ class Level:
         self.num_players = num_players
         self.game_over = False
         self.winner = None
-        self.player_1_name = "PLAYER" if self.num_players == 1 else "PLAYER 1"
-        self.player_2_name = "COMPUTER" if self.num_players == 1 else "PLAYER 2"
+        self.player_1_name = "PLAYER" if self.num_players == 1 else "PLAYER 2"
+        self.player_2_name = "COMPUTER" if self.num_players == 1 else "PLAYER 1"
 
         # score
         self.font = pygame.font.Font("pixelfont.ttf")
@@ -36,13 +35,13 @@ class Level:
         ball = Ball((SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2), self.all_sprites,
                     self.collision_sprites, self.score)
         Player((SCREEN_WIDTH - 60, SCREEN_HEIGHT // 2),
-               (self.all_sprites, self.collision_sprites))
+               (self.all_sprites, self.collision_sprites), side='right')
         if self.num_players == 1:
             Computer((60, SCREEN_HEIGHT // 2),
                      (self.all_sprites, self.collision_sprites), ball)
         elif self.num_players == 2:
-            Player2((60, SCREEN_HEIGHT // 2),
-                    (self.all_sprites, self.collision_sprites))
+            Player((60, SCREEN_HEIGHT // 2),
+                   (self.all_sprites, self.collision_sprites), side='left')
 
     def reset(self):
         self.__init__(self.num_players)
