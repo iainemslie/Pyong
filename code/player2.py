@@ -22,4 +22,4 @@ class Player2(Entity):
     def update(self, dt):
         self.input()
         self.move(dt)
-        self.check_bounds()
+        self.check_bounds(dt)

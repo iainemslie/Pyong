@@ -12,7 +12,7 @@ class Computer(Entity):
         self.ball = ball
 
     def check_ball_position(self):
-        error = randint(-30, 30)
+        error = randint(-28, 28)
         self.speed = randint(300, 500)
         notice_range = randint(SCREEN_WIDTH // 2, SCREEN_WIDTH * 3 // 4)
         if self.ball.rect.centerx < notice_range:
