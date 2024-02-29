@@ -8,3 +8,5 @@ The only requirement is to install `pygame`
 $ pip install pygame
 $ python main.py
 ```
+
+![Pyong Title Screen](titlescreen.png)
